@@ -43,11 +43,9 @@ The dataset has `r nrow(dataset)` rows (countries) and `r ncol(dataset)` columns
 
 ## Production condition
 
-=======
 The dataset has `r nrow(dataset)` rows (countries) and `r ncol(dataset)` columns (variables). 
 
 ## Production condition 
->>>>>>> c46d24b57af1198fef84e47b332ef1952db7a662
 To create our dataset we used databases from the World Bank and the UNDP websites where we chose the variables we wanted to study in our project. Then we cleaned and we joined the different databases to keep all the information in one database. The process to clean and to join the databases is explained with more details in the annex.
 
 ## Main variables
@@ -350,32 +348,13 @@ These results indeed suggests that there might a causality between the number of
 
 # Conclusion
 
-<<<<<<< HEAD
-In conclusion , our results suggests that the proportion of seats occupied by women in national parliaments seems to not have an influence on national defenses , policies that aim to reduce inequalities and the standard of living as there is not a significant correlation or causation links between women in parliaments and the variables Militray Spending , Gini Coefficient and the HDI.
-=======
 In conclusion , our results suggests that the proportion of seats occupied by women in national parliaments seems to not have an influence on national defenses , policies that aim to reduce inequalities as there is not a significant correlation or causation links  between women in parliaments and the variables Military Spending and the Gini Coefficient.
 For the Women and Business Law Index Score which measures how laws and regulations affect women's economic opportunity , there is a strong possibility that there might be a positive causality. However, there might be a case of reverse causality : positive women's conditions can favour the access to political functions for women.
 When it comes to the standard of living, environmental policies and economic development, there is a positive correlation. Our linear regressions also suggest a positive causality. However we did not incorporate enough control variables that might impact both of the number of women in parliaments and theses variables  simultaneously. 
 Therefore , the results drawn from our dataset suggest that there might be a a link between the number of women in parliaments and public policies that favour economic growth , the environment and the conditions of women. To further analyse the causality between those variables, other regressions that incorporate more control variables need to be performed to efficiently assess the causal relationship.
->>>>>>> c46d24b57af1198fef84e47b332ef1952db7a662
-
-      It is often said that women concentrate more on social and environmental policies because they are more "emotional" but this does not seem to be true or at least there is no evident relationship between these variables. The only "social" variable that seems to be really impacted by the share of female parliamentarians is the Women and Business Law Index Score which measures how laws and regulations affect women's economic opportunity. Thus, female parliamentarians can have a positive impact on women's conditions but this result has to be hold with a grain of salt since we may have a reverse causality: positive women's conditions can favour the access to political functions for women. Furthermore, our results show us that female legislators do not impact the military spending either.
-
-<<<<<<< HEAD
-When its comes to the standard of living , environmental policies and economic developement , there is a positive correlation. Our linear regressions also suggest a positive causality.However we did not incorporate enough control variables that might impact both of the number of women in parliaments and theses variables simultaneously.
-
-Therefore , the results drawn from our dataset suggest that there might be a a link between the number of women in parliaments and public policies that favor economic growth , the environment and the conditions of womens. To futher analyse the causality between those variables , other regressions that incorporate more control variable need to be performed to efficiently assess the causal relationship.
-
-In conclusion, according to our results, female parliamentarians do not seem to have a significant impact on the development of a country and on most of the governmental policies (the impact seems to be weak). It is often said that women concentrate more on social and environmental policies because they are more "emotional" but this does not seem to be true or at least there is no evident relationship between these variables. The only "social" variable that seems to be really impacted by the share of female parliamentarians is the Women and Business Law Index Score which measures how laws and regulations affect women's economic opportunity. Thus, female parliamentarians can have a positive impact on women's conditions but this result has to be hold with a grain of salt since we may have a reverse causality: positive women's conditions can favour the access to political functions for women. Furthermore, our results show us that female legislators do not impact the military spending either.
-
-When it comes to the impact of women parliamentarians on environmental policies , there seems to be a causal relationship. However , the informations contained in our dataset do not allow us to fully assess this relationship since there might be other variables that simultaneously impact those two variables.
-
-Based on our results we can make two major general conclusions. (On one hand, we can reject the general opinion according to which women legislators favour social and environmental issues. On the other hand, since the gender of the parliamentarians does not have a significant impact on government policies there is no reason to reject the presence of women in the legislative body. If it is really the case, why are there still countries that have a low share of female parliamentarians ? We saw that the share of female legislators does not depend on the income group, the disparities are more present between the different regions. The share of female parliamentarians can depend on culture and other variables rather than the level of development of a country. For example, Japan is a high income country but the share of female parliamentarians is equal to 9.68% which is far below the world mean (26.53%) while Nicaragua is a Low middle income country and has a share of female parliamentarians equal to 50.5% (two times the world average). Thus, the reasons behind the amount of female parliamentarians may be specific to each country.
-=======
-      When it comes to the impact of women parliamentarians on environmental policies , there seems to be a causal relationship. However , the informations contained in our dataset do not allow us to fully assess this relationship since there might be other variables that simultaneously impact those two variables.
 
 Even if we found that the share of female parliamentarians can have a relationship with other variables, our results have to be hold with a grain of salt since we may have biased models. Moreover, the correlation between the share of female parliamentarians and most of the other variables are weak (cf: correlation matrix). This leads us to think that in reality, the share of female parliamentarians may have a weak impact on government policies. If this is true, we can make one conclusion: the gender of the parliamentarians does not have a significant impact on government policies so there is no reason to reject the presence of women in the legislative body. If it is really the case, why are there still countries that have a low share of female parliamentarians ? We saw that the share of female legislators does not depend on the income group, the disparities are more present between the different regions. The share of female parliamentarians can depend on culture and other variables rather than the level of development of a country. For example, Japan is a high income country but the share of female parliamentarians is equal to 9.68% which is far below the world mean (26.53%) while Nicaragua is a Low middle income country and has a share of female parliamentarians equal to 50.5% (two times the world average). Thus, the reasons behind the amount of female parliamentarians may be specific to each country.
->>>>>>> c46d24b57af1198fef84e47b332ef1952db7a662
+
 
 # Annex
 
