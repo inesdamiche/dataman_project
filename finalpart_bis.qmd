@@ -1,11 +1,4 @@
 ---
-title: "Data management project - Final part"
-author: "Damiche Inès & Gobiraj Nila"
-format: pdf
-editor: visual
----
-
----
 title: "Data Management Project - final part"
 author: Damiche Inès & Gobiraj Nila
 format: pdf
