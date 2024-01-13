@@ -12,23 +12,22 @@ The 2023 Agenda for Sustainable Development puts a strong emphasis on advancing 
 
 Therefore rather than focusing on how a countries of level of development could empower women , this paper aims to study how putting women in position of legislative power could improve the development of a country.
 
-Our study aims to explore the correlation between the proportion of women occupying parliamentary seats and the implementation of public policies. We seek to analyze the interplay between women in parliament and various development and socio-economic indicators to identify recurring patterns. Thus, **we will investigate the extent to which the proportion of seats held by women in national parliaments influences public policy outcomes** by conducting an analysis across countries at the world level, the regional level, and within income groups to better understand the disparities and nuances within similar countries in terms of development.To account for different dimensions of a country's development and policy priorities, we will consider several indicators offering different lenses through which we can assess the influence of women in parliaments on public policies.We will first analyze basic development indicators such as the **Human Development Index (HDI) and the Annual GDP growth** to assess whether women's participation in decision-making correlates positively with human and economic development. Given the existing correlation between higher development and gender equality, we will also conduct analyses within regions and income groups to see if there are any patterns.In addition, we will also introduce other economic variables such as the **Total Labor Participation Rate and the Female Participation Rate** to assess the correlation with employment and economic growth.Furthermore, this study also aims to investigate the outcome of public policies regarding gender development with indicators such as the **Gender Development Index (GDI) and the Women Business and the Law Index Score**, which reflects legal frameworks supporting women in business and law.To assess potential shifts in policy orientation towards social justice and equality rather than economic growth and military spending, we will incorporate the **Military Expenditure (% of GDP)** indicator and the **Gini Coefficient ,** which provides a measure for policies regarding income inequality and wealth distribution.\Finally, we will evaluate the relationship between women parliamentarians and the priority given to environmental issues through the incorporation of the **Planetary Pressures-Adjusted Human Development Index (PHDI).**
+Our study aims to explore the correlation between the proportion of women occupying parliamentary seats and the implementation of public policies. We seek to analyze the interplay between women in parliament and various development and socio-economic indicators to identify recurring patterns. Thus, **we will investigate the extent to which the proportion of seats held by women in national parliaments influences public policy outcomes** by conducting an analysis across countries at the world level, the regional level, and within income groups to better understand the disparities and nuances within similar countries in terms of development.To account for different dimensions of a country's development and policy priorities, we will consider several indicators offering different lenses through which we can assess the influence of women in parliaments on public policies.We will first analyze basic development indicators such as the **Human Development Index (HDI) and the Annual GDP growth** to assess whether women's participation in decision-making correlates positively with human and economic development. Given the existing correlation between higher development and gender equality, we will also conduct analyses within regions and income groups to see if there are any patterns.In addition, we will also introduce other economic variables such as the **Total Labor Participation Rate and the Female Participation Rate** to assess the correlation with employment and economic growth.Furthermore, this study also aims to investigate the outcome of public policies regarding gender development with indicators such as the **Gender Development Index (GDI) and the Women Business and the Law Index Score**, which reflects legal frameworks supporting women in business and law.To assess potential shifts in policy orientation towards social justice and equality rather than economic growth and military spending, we will incorporate the **Military Expenditure (% of GDP)** indicator and the **Gini Coefficient ,** which provides a measure for policies regarding income inequality and wealth distribution.Finally, we will evaluate the relationship between women parliamentarians and the priority given to environmental issues through the incorporation of the **Planetary Pressures-Adjusted Human Development Index (PHDI).**
 
 # Data sets descriptions
 
 We will use one dataset that contains the variables that we want to study and some variables that will be used to compare the countries (income group, region of the world).
 
-## Loading the dataset
 
 ```{r}
 #| message: FALSE
-here::i_am("Project.Rproj")
+here::i_am("dataman_project.Rproj")
 library(here)
 library(vroom) 
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-theme_set(theme_bw(base_size = 10)) 
+theme_set(theme_bw(base_size = 7.5)) 
 library(knitr)
 library(kableExtra)
 library(broom)
@@ -211,7 +210,16 @@ ggplot(dataset, aes(x= `Proportion of seats held by women in national parliament
   scale_color_manual(values = "light blue")
 ```
 
-Based on the plot and the regression line, it seems that there is a slight positive correlation between the share of female parliamentarians and the GDP annual growth rate. However, the points are scaterred: the GDP annual growth rate vary a lot for the same level of share of female parliamentarians.
+Based on the plot and the regression line, it seems that there is a slight positive correlation between the share of female parliamentarians and the GDP annual growth rate. However, the points are scaterred: the GDP annual growth rate vary a lot for the same level of share of female parliamentarians. We can do a t-test to see if our variable has a significant impact on the GDP annual growth rate.
+
+```{r}
+options(digits = 3)
+model1 <- lm(data= dataset, dataset$`GDP growth (annual %)`~`Proportion of seats held by women in national parliaments (%)`)
+tidy_model1 <- tidy(model1)
+kable(tidy_model1, caption = "Linear Regression Results")
+```
+
+At a significance level of 5%, the variable "Proportion of seats held by women in national parliaments (%)" is significant. At a significance level of 1%, the variable "Proportion of seats held by women in national parliaments (%)" is not significant.
 
 ### Impact of the share of female parliamentarians on the HDI
 
@@ -228,9 +236,10 @@ ggplot(dataset, aes(x= `Proportion of seats held by women in national parliament
 Again, we observe a lot of disparity between the points. For the same level of share of female parliamentarians we have countries that have a high HDI value and countries that have a low HDI value. Since the share of female parliamentarians is more correlated with the HDI than with the GDP annual growth rate, we will further the analysis of the relationship between the share of female parliamentarians and the HDI. We can do a t-test to see if our variable has a significant impact on the HDI.
 
 ```{r}
-model1 <- lm(data= dataset, `HDI_val`~`Proportion of seats held by women in national parliaments (%)`)
-tidy_model <- tidy(model1)
-kable(tidy_model, caption = "Linear Regression Results")
+options(digits = 3)
+model2 <- lm(data= dataset, `HDI_val`~`Proportion of seats held by women in national parliaments (%)`)
+tidy_model2 <- tidy(model2)
+kable(tidy_model2, caption = "Linear Regression Results")
 ```
 
 At a significance level of 5%, the variable "Proportion of seats held by women in national parliaments (%)" is significant. At a significance level of 1%, the variable "Proportion of seats held by women in national parliaments (%)" is not significant.
@@ -253,9 +262,10 @@ ggplot(dataset, aes(x= `Proportion of seats held by women in national parliament
 It seems that the relationship between the two variables have a positive relationship. To go deeper into the analysis, we will do a t-test.
 
 ```{r}
-model2 <- lm(data= dataset, `Women Business and the Law Index Score (scale 1-100)`~`Proportion of seats held by women in national parliaments (%)`)
-tidy_model2 <- tidy(model2)
-kable(tidy_model2, caption = "Linear Regression Results")
+options(digits = 3)
+model3 <- lm(data= dataset, `Women Business and the Law Index Score (scale 1-100)`~`Proportion of seats held by women in national parliaments (%)`)
+tidy_model3 <- tidy(model3)
+kable(tidy_model3, caption = "Linear Regression Results")
 ```
 
 According to our results, the share of female parliamentarians is significant to explain the Women Business and the Law score index at a significance level of 1%.
@@ -310,9 +320,10 @@ The correlation coefficient between the proportion of seats held by women in nat
 To assess whether there is causality , we will perform a linear regression to asses the impact of women parliamentarians on the PHDI. The level of development of a country might also drive the PHDI since developing countries pollute more than developed ones , so we controlled for this variable with the GDP variable.
 
 ```{r}
-model3 <- lm(data= dataset, `PHDI`~`Proportion of seats held by women in national parliaments (%)` + `GDP growth (annual %)`)
-tidy_model3 <- tidy(model3)
-kable(tidy_model3, caption = "Linear Regression Results")
+options(digits = 3)
+model4 <- lm(data= dataset, `PHDI`~`Proportion of seats held by women in national parliaments (%)` + `GDP growth (annual %)`)
+tidy_model4 <- tidy(model4)
+kable(tidy_model4, caption = "Linear Regression Results")
 
 ```
 
