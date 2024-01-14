@@ -4,6 +4,7 @@ author: Damiche Inès & Gobiraj Nila
 format: pdf
 editor: visual
 echo: false
+message: false
 ---
 
 # Research question
@@ -152,8 +153,7 @@ dataset %>%
   geom_bar()+
    labs(title = "Distribution of Income Groups within Regions",
        x = "Income Group")+ 
-  theme(axis.text.x = element_blank())+
-  facet_wrap(~Region)
+  facet_wrap(~Region, ncol = 3)+  theme(axis.text.x = element_blank())
 ```
 
 We see that the average share of female Parliamentarians is lower in East Asia & Pacific than in Sub-Saharan Africa whereas most of Sub-Saharan countries have a lower income than East Asia & Pacific countries . Thus, we could think that national income and share of female parliamentarians are not really related. However, we also observe that for almost all the regions, the share of female parliamentarians vary a lot within the region. The exception is North America where we see that we have a spike around 30%. We know North America is mostly composed of high income countries whereas in other regions the level of development can vary a lot from a country to another. This can lead us to think that for countries that are part of the same income group the proportion of seats held by women in national parliament would not vary a lot so that is what we are going to see now.
@@ -177,7 +177,8 @@ dataset |>
   summarise(mean = mean(`Proportion of seats held by women in national parliaments (%)`))|>
   ggplot(aes(x = `Income Group`, y = mean,fill=`Income Group`)) +
   geom_col()+
-   labs(title = "Average Proportion of Seats\nHeld by Women in National Parliaments by Income Group in 2021",
+   labs(title = "Average Proportion of Seats Held by Women in National Parliaments 
+by Income Group in 2021",
        x = "Income Group",
        y = "Average Proportion of Seats Held by Women (%)")
 
@@ -210,13 +211,15 @@ As we know this analysis is not sufficient to make deep conclusions, we will now
 According to the **Growth Theory and the Solow model**, countries that have a low growth rate of the GDP are the countries that are near their steady-state which means that they are already highly economically rich. We chose the GDP growth rate and not the GDP because the GDP growth rate reflects more the impact of the public policies.
 
 ```{r}
-  ggplot(dataset, aes(x = `Proportion of seats held by women in national parliaments (%)`, y = `GDP growth (annual %)`)) + 
-    xlab("Share of female parliamentarians") +
-    ylab("GDP annual growth rate(%)") +
-    ggtitle("The impact of the share of female parliamentarians \n on the GDP annual growth rate in 2021") +
-    geom_point() +
-    geom_smooth(method = "lm", se = FALSE, aes(color = "Regression Line")) +
-    scale_color_manual(values = "lightblue")
+ggplot(dataset, aes(x= `Proportion of seats held by women in national parliaments (%)` , y = `GDP growth (annual %)`)) + 
+  xlab("Share of female parliamentarians")+
+  ylab("GDP annual growth rate(%)")+
+  ggtitle("The impact of the share of female parliamentarians on the 
+GDP annual growth rate in 2021")+
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE, aes(color = "Regression Line"))+
+  scale_color_manual(values = "light blue")
+
 ```
 
 
@@ -296,16 +299,15 @@ dataset |>
   geom_smooth(method = "lm", se = FALSE, color = "red") +
   labs(title = "Relationship between Women in Parliaments \n and Military Expenditure",
        x = "Proportion of seats held by women in national parliaments (%)",
-       y = "Military expenditure (% of GDP)") +
-  theme_minimal()
+       y = "Military expenditure (% of GDP)")
 ```
 
 The correlation matrix suggests that that there is a weak negative correlation between Military Spending and Women in Parliaments , which is also illustrated the scatter plot.We thus suspect that there is no causality between those variables . To further assess whether there is causality , we will perform a linear regression
 
 ```{r}
-model <- lm(data= dataset,`Military expenditure (% of GDP)`~`Proportion of seats held by women in national parliaments (%)`)
-tidy_model <- tidy(model)
-kable(tidy_model, caption = "Linear Regression Results")
+model4 <- lm(data= dataset,`Military expenditure (% of GDP)`~`Proportion of seats held by women in national parliaments (%)`)
+tidy_model4 <- tidy(model4)
+kable(tidy_model4, caption = "Linear Regression Results")
 ```
 
 The p-value is over 0.05 , so the proportion of seats held by women in national parliaments is not a significant variable. There is indeed no causal relationships between those two variables.
@@ -327,7 +329,8 @@ dataset %>%
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`, y = PHDI)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "darkgreen") +
-  labs(title = "Relationship between Women in Parliament and PHDI",
+  labs(title = "Relationship between Women in Parliament and PHDI 
+in 2021",
        x = "Proportion of seats held by women in national parliaments (%)",
        y = "PHDI") +
   theme_minimal()
@@ -339,9 +342,9 @@ To assess whether there is causality , we will perform a linear regression to as
 
 ```{r}
 options(digits = 3)
-model4 <- lm(data= dataset, `PHDI`~`Proportion of seats held by women in national parliaments (%)` + `GDP growth (annual %)`)
-tidy_model4 <- tidy(model4)
-kable(tidy_model4, caption = "Linear Regression Results")
+model5 <- lm(data= dataset, `PHDI`~`Proportion of seats held by women in national parliaments (%)` + `GDP growth (annual %)`)
+tidy_model5 <- tidy(model5)
+kable(tidy_model5, caption = "Linear Regression Results")
 
 ```
 
