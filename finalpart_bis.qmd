@@ -4,6 +4,7 @@ author: Damiche Inès & Gobiraj Nila
 format: pdf
 editor: visual
 echo: false
+message: false
 ---
 
 # Research question
@@ -101,7 +102,8 @@ We will start by giving a general presentation of our main variable: the **Propo
 dataset |>
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`)) +
   geom_density(fill = "light blue") +
-  labs(title = "Distribution of the Proportion of Seats Held by Women in National Parliaments in 2021",
+  labs(title = "Distribution of the Proportion of Seats Held by Women in National 
+Parliaments in 2021",
        x = "Proportion of Seats Held by Women in Parliaments (%)",
        y = "Density") +
   geom_rug(color="light blue")  
@@ -120,7 +122,8 @@ dataset |>
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`)) +
   geom_density(fill = "light pink") +
   geom_rug(color="light pink")+
-  labs(title = "Distribution of the Proportion of Seats Held by Women in National Parliaments by Regions in 2021",
+  labs(title = "Distribution of the Proportion of Seats Held by Women in National Parliaments 
+by Regions in 2021",
        x = "Proportion of Seats Held by Women (%)",
        y = "Density") +
   facet_wrap(~`Region`)
@@ -133,7 +136,8 @@ dataset |>
   ggplot(aes(x = Region, y = mean, fill = Region)) +
   geom_col() +
   coord_flip() +
-  labs(title = "Average Proportion of Seats Held by Women in National Parliaments by Regions in 2021",
+  labs(title = "Average Proportion of Seats Held by Women in National Parliaments 
+by Regions in 2021",
        x = "Region",
        y = "Average Proportion of Seats Held by Women (%)")
 ```
@@ -148,7 +152,8 @@ dataset %>%
   geom_bar()+
    labs(title = "Distribution of Income Groups within Regions",
        x = "Income Group")+ 
-  facet_wrap(~Region)
+  facet_wrap(~Region, ncol = 3)+
+   theme(legend.position = "none")
 ```
 
 We see that the average share of female Parliamentarians is lower in East Asia & Pacific than in Sub-Saharan Africa whereas most of Sub-Saharan countries have a lower income than East Asia & Pacific countries . Thus, we could think that national income and share of female parliamentarians are not really related. However, we also observe that for almost all the regions, the share of female parliamentarians vary a lot within the region. The exception is North America where we see that we have a spike around 30%. We know North America is mostly composed of high income countries whereas in other regions the level of development can vary a lot from a country to another. This can lead us to think that for countries that are part of the same income group the proportion of seats held by women in national parliament would not vary a lot so that is what we are going to see now.
@@ -160,7 +165,8 @@ dataset |>
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`)) +
   geom_density(fill = "light green") +
   geom_rug(color="light green")+
-  labs(title = "Distribution of the Proportion of Seats Held by Women in National Parliaments by Income Groups in 2021",
+  labs(title = "Distribution of the Proportion of Seats Held by Women in National
+Parliaments by Income Groups in 2021",
        x = "Proportion of Seats Held by Women (%)",
        y = "Density") +
   facet_wrap(~`Income Group`)
@@ -172,7 +178,8 @@ dataset |>
   summarise(mean = mean(`Proportion of seats held by women in national parliaments (%)`))|>
   ggplot(aes(x = `Income Group`, y = mean,fill=`Income Group`)) +
   geom_col()+
-   labs(title = "Average Proportion of Seats Held by Women in National Parliaments by Income Group in 2021",
+   labs(title = "Average Proportion of Seats Held by Women in National Parliaments 
+by Income Group in 2021",
        x = "Income Group",
        y = "Average Proportion of Seats Held by Women (%)")
 
@@ -210,7 +217,8 @@ According to the **Growth Theory and the Solow model**, countries that have a lo
 ggplot(dataset, aes(x= `Proportion of seats held by women in national parliaments (%)` , y = `GDP growth (annual %)`)) + 
   xlab("Share of female parliamentarians")+
   ylab("GDP annual growth rate(%)")+
-  ggtitle("The impact of the share of female parliamentarians on the GDP annual growth rate in 2021")+
+  ggtitle("The impact of the share of female parliamentarians on the 
+GDP annual growth rate in 2021")+
   geom_point()+
   geom_smooth(method = "lm", se = FALSE, aes(color = "Regression Line"))+
   scale_color_manual(values = "light blue")
@@ -262,7 +270,8 @@ Now, we want to see if women that have the legislative power tend to favour wome
 ggplot(dataset, aes(x= `Proportion of seats held by women in national parliaments (%)`, y = `Women Business and the Law Index Score (scale 1-100)`))+ 
   xlab("Share of female parliamentarians")+
   ylab("Women Business and the Law Index Score ")+
-  ggtitle("The impact of the share of female parliamentarians on the Business and the Law Index Score in 2021")+
+  ggtitle("The impact of the share of female parliamentarians on the Business 
+and the Law Index Score in 2021")+
   geom_point()+
   geom_smooth(method = "lm", color = "light green", se= FALSE)
 ```
@@ -292,18 +301,18 @@ dataset |>
              y = `Military expenditure (% of GDP)`)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "red") +
-  labs(title = "Relationship between Women in Parliaments and Military Expenditure",
+  labs(title = "Relationship between Women in Parliaments and Military 
+Expenditure in 2021",
        x = "Proportion of seats held by women in national parliaments (%)",
-       y = "Military expenditure (% of GDP)") +
-  theme_minimal()
+       y = "Military expenditure (% of GDP)")
 ```
 
 The correlation matrix suggests that that there is a weak negative correlation between Military Spending and Women in Parliaments , which is also illustrated the scatter plot.We thus suspect that there is no causality between those variables . To further assess whether there is causality , we will perform a linear regression
 
 ```{r}
-model <- lm(data= dataset,`Military expenditure (% of GDP)`~`Proportion of seats held by women in national parliaments (%)`)
-tidy_model <- tidy(model)
-kable(tidy_model3, caption = "Linear Regression Results")
+model4 <- lm(data= dataset,`Military expenditure (% of GDP)`~`Proportion of seats held by women in national parliaments (%)`)
+tidy_model4 <- tidy(model4)
+kable(tidy_model4, caption = "Linear Regression Results")
 ```
 
 The p-value is over 0.05 , so the proportion of seats held by women in national parliaments is not a significant variable. There is indeed no causal relationships between those two variables.
@@ -325,7 +334,8 @@ dataset %>%
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`, y = PHDI)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "darkgreen") +
-  labs(title = "Relationship between Women in Parliament and PHDI",
+  labs(title = "Relationship between Women in Parliament and PHDI 
+in 2021",
        x = "Proportion of seats held by women in national parliaments (%)",
        y = "PHDI") +
   theme_minimal()
@@ -337,9 +347,9 @@ To assess whether there is causality , we will perform a linear regression to as
 
 ```{r}
 options(digits = 3)
-model4 <- lm(data= dataset, `PHDI`~`Proportion of seats held by women in national parliaments (%)` + `GDP growth (annual %)`)
-tidy_model4 <- tidy(model4)
-kable(tidy_model4, caption = "Linear Regression Results")
+model5 <- lm(data= dataset, `PHDI`~`Proportion of seats held by women in national parliaments (%)` + `GDP growth (annual %)`)
+tidy_model5 <- tidy(model5)
+kable(tidy_model5, caption = "Linear Regression Results")
 
 ```
 
@@ -353,10 +363,6 @@ In conclusion , our results suggests that the proportion of seats occupied by wo
 For the Women and Business Law Index Score which measures how laws and regulations affect women's economic opportunity , there is a strong possibility that there might be a positive causality. However, there might be a case of reverse causality : positive women's conditions can favour the access to political functions for women.
 When it comes to the standard of living, environmental policies and economic development, there is a positive correlation. Our linear regressions also suggest a positive causality. However we did not incorporate enough control variables that might impact both of the number of women in parliaments and theses variables  simultaneously. 
 Therefore , the results drawn from our dataset suggest that there might be a a link between the number of women in parliaments and public policies that favour economic growth , the environment and the conditions of women. To further analyse the causality between those variables, other regressions that incorporate more control variables need to be performed to efficiently assess the causal relationship.
-
-      It is often said that women concentrate more on social and environmental policies because they are more "emotional" but this does not seem to be true or at least there is no evident relationship between these variables. The only "social" variable that seems to be really impacted by the share of female parliamentarians is the Women and Business Law Index Score which measures how laws and regulations affect women's economic opportunity. Thus, female parliamentarians can have a positive impact on women's conditions but this result has to be hold with a grain of salt since we may have a reverse causality: positive women's conditions can favour the access to political functions for women. Furthermore, our results show us that female legislators do not impact the military spending either.
-
-      When it comes to the impact of women parliamentarians on environmental policies , there seems to be a causal relationship. However , the informations contained in our dataset do not allow us to fully assess this relationship since there might be other variables that simultaneously impact those two variables.
 
 Even if we found that the share of female parliamentarians can have a relationship with other variables, our results have to be hold with a grain of salt since we may have biased models. Moreover, the correlation between the share of female parliamentarians and most of the other variables are weak (cf: correlation matrix). This leads us to think that in reality, the share of female parliamentarians may have a weak impact on government policies. If this is true, we can make one conclusion: the gender of the parliamentarians does not have a significant impact on government policies so there is no reason to reject the presence of women in the legislative body. If it is really the case, why are there still countries that have a low share of female parliamentarians ? We saw that the share of female legislators does not depend on the income group, the disparities are more present between the different regions. The share of female parliamentarians can depend on culture and other variables rather than the level of development of a country. For example, Japan is a high income country but the share of female parliamentarians is equal to 9.68% which is far below the world mean (26.53%) while Nicaragua is a Low middle income country and has a share of female parliamentarians equal to 50.5% (two times the world average). Thus, the reasons behind the amount of female parliamentarians may be specific to each country.
 
