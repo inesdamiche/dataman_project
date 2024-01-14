@@ -309,7 +309,6 @@ Expenditure in 2021",
 The correlation matrix suggests that that there is a weak negative correlation between Military Spending and Women in Parliaments , which is also illustrated the scatter plot.We thus suspect that there is no causality between those variables . To further assess whether there is causality , we will perform a linear regression
 
 ```{r}
-<<<<<<< HEAD
 model4 <- lm(data= dataset,`Military expenditure (% of GDP)`~`Proportion of seats held by women in national parliaments (%)`)
 tidy_model4 <- tidy(model4)
 kable(tidy_model4, caption = "Linear Regression Results")
