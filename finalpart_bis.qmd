@@ -39,6 +39,11 @@ dataset <- dataset[,-1] #the first column was just the row numbers so we take it
 
 ## Size of the dataset
 
+<<<<<<< HEAD
+The dataset has `r nrow(dataset)` rows (countries) and `r ncol(dataset)` columns (variables).
+
+## Production condition
+
 The dataset has `r nrow(dataset)` rows (countries) and `r ncol(dataset)` columns (variables). 
 
 ## Production condition 
@@ -142,9 +147,7 @@ by Regions in 2021",
        y = "Average Proportion of Seats Held by Women (%)")
 ```
 
-The average proportion of seats held by women in national parliaments is the highest in Latin America & Caribbeean region followed by European & Central Asia . The lowest share of women parliaments is in the East Asian & Pacific region and South Asia.
-
-The difference might be driven by the level of economic development in this region. Thus, we will further our analysis by looking at the distribution of income groups within those regions.
+The average proportion of seats held by women in national parliaments is the highest in Latin America & Caribbeean region followed by European & Central Asia . The lowest share of women parliaments is in the East Asian & Pacific region and South Asia. The difference might be driven by the level of economic development in this region. Thus, we will further our analysis by looking at the distribution of income groups within those regions.
 
 ```{r}
 dataset %>%
@@ -185,9 +188,7 @@ by Income Group in 2021",
 
 ```
 
-Thanks to the plots, we can clearly see that the proportion of female parliamentarians vary within the countries that are part of the same income group. We also see that higher income countries have a higher average share of women parliamentarians than the others but the difference is not huge. Also, we see that low income countries have more female parliamentarians than lower middle income countries.
-
-In conclusion, based on these basic plots and statistics, we would be tempted to say that there is no evident correlation between the proportion of female parliamentarians and national income or region of the world.
+Thanks to the plots, we can clearly see that the proportion of female parliamentarians vary within the countries that are part of the same income group. We also see that higher income countries have a higher average share of women parliamentarians than the others but the difference is not huge. Also, we see that low income countries have more female parliamentarians than lower middle income countries. In conclusion, based on these basic plots and statistics, we would be tempted to say that there is no evident correlation between the proportion of female parliamentarians and national income or region of the world.
 
 ### Correlation matrix
 
@@ -234,8 +235,6 @@ kable(tidy_model1, caption = "Linear Regression Results")
 ```
 
 At a significance level of 5%, the variable "Proportion of seats held by women in national parliaments (%)" is significant. At a significance level of 1%, the variable "Proportion of seats held by women in national parliaments (%)" is not significant.
-
-
 
 ### Impact of the share of female parliamentarians on the HDI
 
@@ -310,6 +309,7 @@ Expenditure in 2021",
 The correlation matrix suggests that that there is a weak negative correlation between Military Spending and Women in Parliaments , which is also illustrated the scatter plot.We thus suspect that there is no causality between those variables . To further assess whether there is causality , we will perform a linear regression
 
 ```{r}
+<<<<<<< HEAD
 model4 <- lm(data= dataset,`Military expenditure (% of GDP)`~`Proportion of seats held by women in national parliaments (%)`)
 tidy_model4 <- tidy(model4)
 kable(tidy_model4, caption = "Linear Regression Results")
@@ -365,6 +365,7 @@ When it comes to the standard of living, environmental policies and economic dev
 Therefore , the results drawn from our dataset suggest that there might be a a link between the number of women in parliaments and public policies that favour economic growth , the environment and the conditions of women. To further analyse the causality between those variables, other regressions that incorporate more control variables need to be performed to efficiently assess the causal relationship.
 
 Even if we found that the share of female parliamentarians can have a relationship with other variables, our results have to be hold with a grain of salt since we may have biased models. Moreover, the correlation between the share of female parliamentarians and most of the other variables are weak (cf: correlation matrix). This leads us to think that in reality, the share of female parliamentarians may have a weak impact on government policies. If this is true, we can make one conclusion: the gender of the parliamentarians does not have a significant impact on government policies so there is no reason to reject the presence of women in the legislative body. If it is really the case, why are there still countries that have a low share of female parliamentarians ? We saw that the share of female legislators does not depend on the income group, the disparities are more present between the different regions. The share of female parliamentarians can depend on culture and other variables rather than the level of development of a country. For example, Japan is a high income country but the share of female parliamentarians is equal to 9.68% which is far below the world mean (26.53%) while Nicaragua is a Low middle income country and has a share of female parliamentarians equal to 50.5% (two times the world average). Thus, the reasons behind the amount of female parliamentarians may be specific to each country.
+
 
 # Annex
 
