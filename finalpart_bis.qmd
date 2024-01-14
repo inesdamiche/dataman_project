@@ -4,9 +4,10 @@ author: Damiche Inès & Gobiraj Nila
 format: pdf
 editor: visual
 echo: false
-message: false
 ---
-
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
 # Research question
 
 The 2023 Agenda for Sustainable Development puts a strong emphasis on advancing gender equality and the empowerment of women in leadership and decision‑making roles within the framework of SDG 5: Gender Equality. Indeed, with women constituting almost half of every country's population, their inclusion in the decision-making process is key to ensuring more representation in politics.Beyond transforming social norms and ensuring diversity, research has also shown that the involvement of women in politics could lead to shifts in policy priorities by positively influencing legislation regarding social justice, education, and peace. For instance, O'Brien and Piscopo (2018) demonstrated that female representatives can diversify legislative agendas in favor of vulnerable groups, while Ramstetter and Habersack (2019) found that within the European Parliament, women were notably more supportive of environmental legislation than men. This suggests that increasing the number of women in the legislative process could have a positive impact on a country's development by shifting public policy orientations.
@@ -20,7 +21,6 @@ Our study aims to explore the correlation between the proportion of women occupy
 We will use a dataset that contains the variables that we want to study and some variables that will be used to compare the countries (income group, region of the world).
 
 ```{r}
-#| message: FALSE
 here::i_am("dataman_project.Rproj")
 library(here)
 library(vroom) 
@@ -38,9 +38,11 @@ dataset <- dataset[,-1] #the first column was just the row numbers so we take it
 ```
 
 ## Size of the dataset
+
 The dataset has `r nrow(dataset)` rows (countries) and `r ncol(dataset)` columns (variables).
 
 ## Production condition
+
 The dataset has `r nrow(dataset)` rows (countries) and `r ncol(dataset)` columns (variables).
 
 ## Production condition
@@ -105,8 +107,7 @@ We will start by giving a general presentation of our main variable: the **Propo
 dataset |>
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`)) +
   geom_density(fill = "light blue") +
-  labs(title = "Distribution of the Proportion of Seats Held by Women in National 
-Parliaments in 2021",
+  labs(title = "Distribution of the Proportion of Seats \n Held by Women in National Parliaments in 2021",
        x = "Proportion of Seats Held by Women in Parliaments (%)",
        y = "Density") +
   geom_rug(color="light blue")  
@@ -125,8 +126,7 @@ dataset |>
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`)) +
   geom_density(fill = "light pink") +
   geom_rug(color="light pink")+
-  labs(title = "Distribution of the Proportion of Seats Held by Women in National Parliaments 
-by Regions in 2021",
+  labs(title = "Distribution of the Proportion of Seats \n Held by Women in National Parliaments by Regions in 2021",
        x = "Proportion of Seats Held by Women (%)",
        y = "Density") +
   facet_wrap(~`Region`)
@@ -190,7 +190,7 @@ Thanks to the plots, we can clearly see that the proportion of female parliament
 
 To try to go deeper, we will study the correlation matrix between our variables.
 
-The correlation matrix gives us a general idea about relationships between our target variable (share of women in Parliaments) and the other variables. We can see that the variables that are more correlated (positively) with the share of women in national parliaments are the Women Business and Law Index Score, the GDI, the HDI and the PHDI. We also see that the HDI and the PHDI are strongly positively correlated which we will have to take into account later in our analysis.`
+The correlation matrix gives us a general idea about relationships between our target variable (share of women in Parliaments) and the other variables. We can see that the variables that are more correlated (positively) with the share of women in national parliaments are the Women Business and Law Index Score, the GDI, the HDI and the PHDI. We also see that the HDI and the PHDI are strongly positively correlated which we will have to take into account later in our analysis.\`
 
 ```{r}
 options(digits = 3)
@@ -198,7 +198,8 @@ cor1<-cor(dataset[, 5:14])
 knitr::kable(cor1 , caption = "Correlation matrix ") |> kable_styling(font_size = 5, fixed_thead = TRUE, full_width = TRUE, position = "center", bootstrap_options = "striped")
 
 ```
-\newpage 
+
+\newpage
 
 ### Conclusion of our general analysis of the main variable
 
@@ -221,7 +222,6 @@ GDP annual growth rate in 2021")+
   scale_color_manual(values = "light blue")
 
 ```
-
 
 Based on the plot and the regression line, it seems that there is a slight positive correlation between the share of female parliamentarians and the GDP annual growth rate. However, the points are scaterred: the GDP annual growth rate vary a lot for the same level of share of female parliamentarians. We can do a t-test to see if our variable has a significant impact on the GDP annual growth rate.
 
@@ -324,6 +324,8 @@ This section will focus on the impact of more women in legislative institutions 
 
 ### Impact of the share of women parliamentarians on the PHDI
 
+We know that HDI and PHDI are strongly correlated (0.922) so the results are quite identical.
+
 ```{r}
 dataset %>%
   ggplot(aes(x = `Proportion of seats held by women in national parliaments (%)`, y = PHDI)) +
@@ -336,7 +338,7 @@ in 2021",
   theme_minimal()
 ```
 
-The correlation coefficient between the proportion of seats held by women in national parliaments and the PHDI (0.230) and the scatter plot suggest there is a weak positive correlation between women parliamentarians and the PHDI.
+The correlation coefficient between the proportion of seats held by women in national parliaments and the PHDI (0.230) and the scatter plot suggest there is a weak positive correlation between women parliamentarians and the PHDI. 
 
 To assess whether there is causality , we will perform a linear regression to asses the impact of women parliamentarians on the PHDI. The level of development of a country might also drive the PHDI since developing countries pollute more than developed ones , so we controlled for this variable with the GDP variable.
 
@@ -360,4 +362,176 @@ Even if we found that the share of female parliamentarians can have a relationsh
 
 # Annex
 
-Github link:
+## Description of the data joining and cleaning
+```{r}
+metadata <- vroom(here("data csv/countries_metadata.csv")) 
+gender_dev <- vroom(here("data csv/dvlpmt_gender_index.csv"))
+planet_HDI <- vroom(here("data csv/HDI_planet.csv"))
+HDI <- vroom(here("data csv/HDI.csv"))
+inequalities <- vroom(here("data csv/inequalities.csv"))
+world_dev <- vroom(here("data csv/World Development Indicators - WB.csv"))
+metadata_UNDP <- vroom(here("data csv/UNSD — Methodology.csv")) 
+```
+
+### Data Cleaning
+
+#### World Development Indicators Dataset
+
+The first step involved cleaning the World Development Indicators dataset in order to convert the missing values denoted as ",,", into NA values.In addition , we converted the data type of the value of each indicator from string to numeric, while making sure to change the decimal indicator from "," to "." for RStudio to correctly identify the value as a decimal number.
+
+```{r}
+# Data Cleaning - World Development Indicators.
+# We turn missing values  into NA value
+Dev <- world_dev |>
+  mutate(`2021 [YR2021]` = na_if(`2021 [YR2021]`, ",,"))
+# We turn the values of each indicators  into numeric ones and make sure that Rstudio takes into account that the decimal separator is "," and not "."
+Dev <- Dev|>
+  mutate(`2021 [YR2021]` = as.numeric(gsub(",",".", `2021 [YR2021]`)))
+```
+
+#### UNDP Databases
+
+For the UNDP Databases ( Human Development Indices), this step involved selecting the columns of the variables we are interested in , changing the decimal indicator from "," to "." and renaming the columns in order to have uniform names across all databases.
+
+```{r}
+# UNDP Database
+#we select columns we are interested in and turn the values into numeric ones 
+#HDI
+HDI<-
+  HDI|>
+  select(`Table 1. Human Development Index and its components`,...3)|>
+  rename(`Country Name`=`Table 1. Human Development Index and its components`,HDI_val=...3)
+HDI <- HDI|>
+  mutate(HDI_val = as.numeric(gsub(",", ".", HDI_val)))
+#Gender Development Index
+GDI<-gender_dev|>
+  select(`Table 4. Gender Development Index`,...3)|>
+  rename(`Country Name`=`Table 4. Gender Development Index`,GDI_val=...3)|>
+   mutate(GDI_val = as.numeric(gsub(",", ".", GDI_val)))
+
+# Gini Coefficient
+Gini<-inequalities|>
+  select(`Table 3. Inequality-adjusted Human Development Index`,...31)|>
+  rename(`Country Name`=`Table 3. Inequality-adjusted Human Development Index`,Gini_coef=...31)|>
+  mutate(Gini_coef = as.numeric(gsub(",", ".", Gini_coef)))
+
+#PHDI
+PHDI<-planet_HDI|>
+  select(`Table 7. Planetary pressures-adjusted Human Development Index`,...5)|>
+  rename(`Country Name`=`Table 7. Planetary pressures-adjusted Human Development Index`,PHDI=...5)|>
+  mutate(PHDI = as.numeric(gsub(",", ".", PHDI)))
+
+```
+
+#### Meta-data Databases
+
+For the Meta-data Databases for both the World Bank's and the UNDP's databases , this step involved selecting the columns with the variables we are interested in and renaming them to ensure the uniformity of the variables' names across the datasets.
+
+```{r}
+# Metadata cleaning 
+#World Bank
+meta_WB<-metadata|>
+  select(Code,`Table Name`,Region,`Income Group`)|>
+  rename(`Country Name`=`Table Name`)
+#UNDP
+meta_UNDP<-metadata_UNDP|>
+  select(`Country or Area`,`ISO-alpha3 Code`)|>
+  rename(`Country Name`=`Country or Area`)
+```
+
+### Data Joining
+
+#### Meta-Data and Databases
+
+For the UNDP datasets , we computed a function to simplify the joining process with the meta-data. The aim of the function is to perform a left join with the UNDP and the meta-data databases, rename the columns names and delete the country name column from the final dataset in order to join them with the main dataset ( World Development Indicators) afterwards.
+
+Because some countries' names were computed differently in the meta-data database, we computed them manually by creating a separate dataset with the countries' names (as in the UNDP datasets) and their country code and binded them to the initial UNDP meta-data database.
+
+```{r}
+#MetaData Joining - UNDP databases
+#join UNDP data with their Country Code
+
+# Function in order to perform a "left-join" for each databases
+country_code<-function(dataset1,dataset2){
+  dataset1<-left_join(dataset1, dataset2, join_by(`Country Name`))|>
+    rename(`Country Code`=`ISO-alpha3 Code`)|>
+    drop_na(`Country Code`)|>
+    select(-`Country Name`)
+  
+}
+
+# we create a new  dataframe to join the country code for the 12 countries that couldn't be joined
+
+other <- tibble(`Country Name`  = c("United States", "United Kingdom", "Tanzania (United Republic of)", "Palestine, State of", "Netherlands","Moldova (Republic of)",	"Korea (Republic of)" , "Korea (Democratic People's Rep. of)" , "Hong Kong, China (SAR)",
+"Eswatini (Kingdom of)" , "Côte d'Ivoire" , "Congo (Democratic Republic of the)"),
+  `ISO-alpha3 Code` = c("USA","GBR","TZA","PSE","NLD", "MDA","KOR","PRK","HKG","SWZ","CIV","COD"))
+meta_UNDP<-rbind(meta_UNDP,other)
+
+# Joining 
+
+HDI<-country_code(HDI,meta_UNDP)
+GDI<-country_code(GDI,meta_UNDP)
+Gini<-country_code(Gini,meta_UNDP)
+PHDI<-country_code(PHDI,meta_UNDP)
+```
+
+For the World Bank database , we joined the meta-data with the regions and the income groups by country code to the World Development Indicators database.
+
+```{r}
+#MetaData Joining - WB databases
+meta_WB<-meta_WB|>
+  select(-`Country Name`)|>
+  rename(`Country Code`=`Code`)
+Dev<-left_join(Dev, meta_WB, join_by(`Country Code`))
+
+```
+
+As a last step , we joined the UNDP databases to the World Development Indicators' one.
+
+```{r}
+# Databases Joining
+Dev <-inner_join(Dev,GDI,join_by(`Country Code`))
+Dev <-inner_join(Dev,HDI,join_by(`Country Code`))
+Dev <-inner_join(Dev,Gini,join_by(`Country Code`))
+
+# Final Dataset
+dataset <- inner_join(Dev, PHDI, join_by(`Country Code`))
+
+
+```
+
+#### Final Dataset
+
+Finally , we created the final dataset by using the pivot_wider() function in order to transform the world development indicators into columns to have separate variables. Then, we eliminated all the countries that had at least one NA .
+
+```{r}
+# Turn the Indicators from the World Bank Databases into Columns 
+dataset<-dataset|>
+  select(-`Series Code`)|>
+  pivot_wider(names_from = `Series Name`,values_from = `2021 [YR2021]`)
+
+# Elimination of all the NA Values 
+dataset<-na.omit(dataset)
+```
+
+## Github link
+
+<https://github.com/inesdamiche/dataman_project.git>
+
+## Sources
+
+United Nations Development Programme (2023). Human Development Index. \[online\] United Nations Development Programme. Available at: <https://hdr.undp.org/data-center/human-development-index#/indicies/HDI>.
+
+United Nations Development Programme (2023). Gender Development Index. \[online\] hdr.undp.org. Available at: <https://hdr.undp.org/gender-development-index#/indicies/GDI>.
+
+United Nations Development Programme (2023). Planetary pressures--adjusted Human Development Index. \[online\] hdr.undp.org. Available at: <https://hdr.undp.org/planetary-pressures-adjusted-human-development-index#/indicies/PHDI>.
+
+World Bank (2023). GDP Growth (annual %) \| Data. \[online\] Worldbank.org. Available at: <https://data.worldbank.org/indicator/ny.gdp.mktp.kd.zg>
+
+World Bank (2023).. Women Business and the Law Index Score (scale 1-100) \| Data. \[online\] Available at: <https://data.worldbank.org/indicator/SG.LAW.INDX>.
+
+The World Bank (2023). Military expenditure (% of GDP) \| Data. \[online\] Worldbank.org. Available at:<https://data.worldbank.org/indicator/MS.MIL.XPND.GD.ZS>.
+
+‌O'Brien, D.Z. and Piscopo, J.M. (2018). The Impact of Women in Parliament. *The Palgrave Handbook of Women's Political Rights*, pp.53--72.
+
+Ramstetter, L. and Habersack, F. (2019). Do Women Make a difference? Analysing Environmental Attitudes and Actions of Members of the European Parliament. *Environmental Politics*, 29(6), pp.1--22.
